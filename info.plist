@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>assafdev.mailinator</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>62E699D2-BCA9-4B0C-B6C9-52D56C3BF49E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CB04F3B7-9594-4925-B8D2-9E43863C743F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>33053263-E736-4FBB-B5D0-05C789443393</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>52E7A98D-EBFB-4B45-9B16-2A74F02ED0CD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Assaf Shalin</string>
+	<key>description</key>
+	<string>Will create a new mailinator, open it and copy to clipboard</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Mailinator</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}@mailinator.com</string>
+				<key>title</key>
+				<string>Email Copied to clipboard</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>CB04F3B7-9594-4925-B8D2-9E43863C743F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+
+	set q to "https://www.mailinator.com/inbox2.jsp?public_to=" &amp; q
+	tell application "/Applications/Google Chrome.app"
+		make new window
+		set URL of active tab of window 1 to q
+	end tell
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>33053263-E736-4FBB-B5D0-05C789443393</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>mailinator</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading...</string>
+				<key>script</key>
+				<string>require "net/http"
+require "uri"
+require 'json'
+response = JSON.parse(Net::HTTP.get_response(URI.parse("https://randomuser.me/api/?nat=gb")).body)['results'][0]['name']
+name = response['first'] + '.' + response['last']
+email = name + '@mailinator.com'
+print &lt;&lt;-HEREDOC
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+    &lt;item valid="YES"&gt;
+        &lt;title&gt;#{name}&lt;/title&gt;
+        &lt;subtitle&gt;#{email}&lt;/subtitle&gt;
+        &lt;icon&gt;icon.png&lt;/icon&gt;
+        &lt;arg&gt;#{name}&lt;/arg&gt;
+    &lt;/item&gt;
+&lt;/items&gt;
+HEREDOC
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Mailinator</string>
+				<key>type</key>
+				<integer>2</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>62E699D2-BCA9-4B0C-B6C9-52D56C3BF49E</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}@mailinator.com</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>52E7A98D-EBFB-4B45-9B16-2A74F02ED0CD</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>33053263-E736-4FBB-B5D0-05C789443393</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<integer>200</integer>
+		</dict>
+		<key>52E7A98D-EBFB-4B45-9B16-2A74F02ED0CD</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<real>360</real>
+		</dict>
+		<key>62E699D2-BCA9-4B0C-B6C9-52D56C3BF49E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>220</integer>
+			<key>ypos</key>
+			<integer>200</integer>
+		</dict>
+		<key>CB04F3B7-9594-4925-B8D2-9E43863C743F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://assafdev.mobi</string>
+</dict>
+</plist>
