@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-zip -r ./Supervisor.alfredworkflow ./
+zip -r ./Mailinator.alfredworkflow ./
